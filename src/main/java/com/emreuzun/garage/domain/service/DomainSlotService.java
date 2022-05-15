@@ -45,10 +45,10 @@ public class DomainSlotService implements SlotService {
     }
 
     @Override
-    public String leave(Integer slotNo) {
+    public void leave(Integer order) {
         Optional<Ticket> optionalTicket = ticketService.findAll().stream()
                 .filter(Ticket::isActive)
-                .filter(t -> t.getSlotNo().equals(slotNo)).findFirst();
+                .filter(t -> t.getOrder().equals(order)).findFirst();
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
             ticket.setActive(false);
@@ -57,7 +57,6 @@ public class DomainSlotService implements SlotService {
                 slot.setEmpty(true);
                 slotRepository.update(slot);
             });
-            return "Allocated " + ticket.getVehicle().getType().getSlotSize() + " slot";
         }
         throw new DomainException("Ticket Not Found");
     }

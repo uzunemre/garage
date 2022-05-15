@@ -36,7 +36,8 @@ public class OtherVehicleParkStrategy implements ParkStrategy {
         }
         List<Slot> closestSlots = getClosestSlots(vehicleParkRequest, availableSlots);
         Vehicle vehicle = VehicleFactory.createVehicle(vehicleParkRequest);
-        Ticket ticket = TicketFactory.createTicket(closestSlots, vehicle);
+        int order = (int) ticketService.findAll().stream().filter(Ticket::isActive).count() + 1;
+        Ticket ticket = TicketFactory.createTicket(closestSlots, vehicle, order);
         ticketService.add(ticket);
         for (Slot slot : closestSlots) {
             slot.setEmpty(false);

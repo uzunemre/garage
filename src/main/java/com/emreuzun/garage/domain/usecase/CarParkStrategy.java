@@ -23,11 +23,12 @@ public class CarParkStrategy implements ParkStrategy {
     }
 
     @Override
-    public void park(VehicleParkRequest vehicleParkRequest,List<Integer> availableSlots) {
+    public void park(VehicleParkRequest vehicleParkRequest, List<Integer> availableSlots) {
         Integer slotNo = availableSlots.get(0);
         List<Slot> closestSlot = slotRepository.findByNo(slotNo);
         Vehicle vehicle = VehicleFactory.createVehicle(vehicleParkRequest);
-        Ticket ticket = TicketFactory.createTicket(closestSlot, vehicle);
+        int order = (int) ticketService.findAll().stream().filter(Ticket::isActive).count() + 1;
+        Ticket ticket = TicketFactory.createTicket(closestSlot, vehicle, order);
         ticketService.add(ticket);
         closestSlot.get(0).setEmpty(false);
         slotRepository.update(closestSlot.get(0));

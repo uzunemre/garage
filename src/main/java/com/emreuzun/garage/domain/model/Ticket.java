@@ -19,7 +19,7 @@ public class Ticket {
 
     private boolean active;
 
-    private Integer slotNo;
+    private Integer order ;
 
     public Set<Integer> getSlotsAsInt() {
         return slots.stream().map(Slot::getNo).collect(Collectors.toSet());

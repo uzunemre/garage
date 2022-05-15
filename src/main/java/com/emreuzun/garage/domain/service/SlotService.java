@@ -6,7 +6,7 @@ public interface SlotService {
 
     void park(VehicleParkRequest parkRequest);
 
-    String leave(Integer slotNo);
+    void leave(Integer slotNo);
 
     String getStatus();
 

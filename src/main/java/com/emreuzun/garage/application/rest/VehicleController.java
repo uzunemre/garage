@@ -26,10 +26,10 @@ public class VehicleController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/leave/{slotNo}")
-    ResponseEntity<?> leave(@PathVariable Integer slotNo) {
-        String status = slotService.leave(slotNo);
-        return ResponseEntity.ok(status);
+    @PostMapping("/leave/{order}")
+    ResponseEntity<?> leave(@PathVariable Integer order) {
+        slotService.leave(order);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/status")
